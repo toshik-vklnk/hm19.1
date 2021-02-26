@@ -5,13 +5,17 @@ import java.util.UUID;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        City kharkiv = new City(uuidGenerator(), "Харьков");
+        City kiev = new City(uuidGenerator(), "Киев");
+        City zaporozhe = new City(uuidGenerator(), "Запорожье");
 
-        Connection connection = CitiesService.createConnection(CitiesService.dbUrl); // подключился к бд
+        Connection connection = CitiesService.createConnection(CitiesService.dbUrl);
 
-        CitiesService.createCitiesTable(connection); // создал таблицу
+        CitiesService.createCitiesTable(connection);
 
-        CitiesService.addCity(kharkiv, connection);
+        CitiesService.addCity(kiev, connection);
+        CitiesService.addCity(zaporozhe, connection);
+
+        CitiesService.getCity(connection);
 
         connection.close();
     }

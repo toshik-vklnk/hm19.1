@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class CitiesService {
 
@@ -15,7 +12,7 @@ public class CitiesService {
     public static void createCitiesTable(Connection connection) throws SQLException {
         String sqlCommand = "CREATE TABLE IF NOT EXISTS cities (\n"
                 + " id TEXT PRIMARY KEY,\n"
-                + " name TEXT UNIQUE CONSTRAINT\n"
+                + " name TEXT UNIQUE\n"
                 + ");";
         try (Statement statement = connection.createStatement()){
             statement.execute(sqlCommand);
@@ -29,5 +26,14 @@ public class CitiesService {
         }
     }
 
+    public static void getCity(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM cities;");
+            while (resultSet.next()) {
+                String id = resultSet.getString(1);
+                String name = resultSet.getString(2);
+                System.out.println(id + " | " + name);
+            }
+    }
 
 }
